@@ -176,7 +176,60 @@
     font-size: 1.1rem;
     line-height: 1.7;
     color: var(--text-color);
-    white-space: pre-wrap;
+}
+
+.content p {
+    margin: 0 0 1.15rem;
+}
+
+.content p:last-child {
+    margin-bottom: 0;
+}
+
+.content strong {
+    font-weight: 700;
+}
+
+.content em {
+    font-style: italic;
+}
+
+.content h2,
+.content h3 {
+    margin: 1.8rem 0 0.95rem;
+    color: var(--text-color);
+    line-height: 1.35;
+}
+
+.content h2 {
+    font-size: 1.5rem;
+}
+
+.content h3 {
+    font-size: 1.25rem;
+}
+
+.content ul,
+.content ol {
+    margin: 0 0 1.15rem 1.25rem;
+}
+
+.content li + li {
+    margin-top: 0.35rem;
+}
+
+.content blockquote {
+    margin: 0 0 1.2rem;
+    padding: 0.2rem 0 0.2rem 1rem;
+    border-left: 3px solid var(--primary-color);
+    color: #6b7280;
+    font-style: italic;
+}
+
+.content a {
+    color: var(--primary-color);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
 }
 
 .navGrid {

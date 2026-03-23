@@ -15,6 +15,7 @@ export default async function EditPostPage(props: Props) {
     if (!post) notFound();
 
     const categories = await prisma.category.findMany();
+    const sections = categories.filter((category) => category.parentId === null);
 
-    return <EditPostForm post={post} categories={categories} />;
+    return <EditPostForm post={post} sections={sections} categories={categories} />;
 }

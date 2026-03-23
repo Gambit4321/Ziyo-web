@@ -242,3 +242,59 @@ Bu loyiha ishlaydigan holatda, lekin keyingi bosqich uchun eng muhim ishlar admi
 - Home page da hanuz oddiy `img` warning qolgan (`src/app/(public)/page.tsx`)
 - `src/app/admin/(protected)/settings/home/page.tsx` da hali eski lint muammolari bor, shu fayl keyingi birinchi cleanup nuqtasi
 - To`liq `npm run lint` butun repo bo`yicha hali toza emas; repo ichida tarixiy xatolar ko`p
+
+## 2026-03-23 holat yangilanishi
+
+- `src/app/admin/(protected)/settings/home/page.tsx` tozalandi va qayta yig`ildi:
+  - drag/drop local state
+  - vaqtincha create/edit/delete
+  - `sourceType`, `displayStyle`, `sortType`, `autoplaySeconds`, `rowCount` boshqaruvi
+  - global save integratsiyasi
+- `src/actions/home.ts` ichida `createHomeSection` endi berilgan `order` qiymatini saqlaydi
+- `src/app/(public)/page.tsx` public renderi kuchaytirildi:
+  - `CATEGORY` va `SECTION` source lar uchun to`g`ri slug linklar ishlaydi
+  - `LIST` va `GRID` ko`rinishlar real renderga ulandi
+  - `rowCount` bo`yicha olinadigan item soni endi hisobga olinadi
+  - section headerlarda `Barchasini ko`rish` linki source slug bo`yicha quriladi
+- `src/app/(public)/page.module.css` ga public home list/grid/category layout stillari qo`shildi
+- Home ready bloklari qo`shildi:
+  - `FEATURED` (`Muharrir tanlovi`)
+  - `LATEST_AUDIO` (`So`nggi audio`)
+- Public home endi `BANNER`, `FEATURED`, `LATEST_AUDIO`, va `GLOBAL` source holatlarini render qiladi
+- `src/actions/home.ts` ichida shu bloklar uchun fetch mantiqi ham kengaytirildi
+- Admin home settings modalga live preview qo`shildi:
+  - tanlangan source label
+  - topiladigan item count
+  - sample title lar
+  - render izohi
+- Admin home settings ro`yxat itemlari ham endi source/count summary ko`rsatadi
+- Temp yoki tahrirlangan bo`lim uchun summary modal preview bilan local ravishda yangilanadi
+- Post create/update algoritmi soddalashtirildi:
+  - `src/actions/post.ts` ichida form parse yagona helperga yig`ildi
+  - `videoDuration` endi haqiqatan saqlanadi
+  - `featured` create va update oqimida ishlaydi
+  - media fieldlar type bo`yicha tozalanadi
+- Ortiqcha legacy create yo`li olib tashlandi:
+  - `src/app/admin/(protected)/posts/new/NewPostForm.tsx`
+  - `src/app/api/posts/route.ts`
+- `src/components/admin/PostForm.tsx` va `src/components/admin/EditPostForm.tsx` ichida:
+  - featured toggle qo`shildi
+  - duration field faqat audio/video media blokida qoldi
+  - audio uchun hardcoded section logikasi olib tashlandi
+  - section/category tanlash create va edit formda bir xil ishlaydi
+  - edit page endi `sections` ni ham formga uzatadi
+- Targeted lint:
+  - `src/app/(public)/page.tsx`
+  - `src/actions/home.ts`
+  - `src/app/admin/(protected)/settings/home/page.tsx`
+  xatosiz o`tdi
+  - faqat `page.tsx` ichida oldindan kutiladigan `<img>` warninglari qoldi
+
+## Keyingi eng yaqin qadam
+
+1. Post create/edit formda media source UX ni soddalashtirish (`url/upload/nas` state larini kamaytirish)
+2. Home settings list itemlari uchun compact badge/color UX ni yaxshilash
+3. `img` larni `next/image` yoki optimallashtirilgan wrapperga ko`chirish
+4. Public home uchun yana bitta tayyor blok qo`shish:
+   - `Eng ko`p o`qilgan video`
+   - yoki `Muhim banner + featured mix`

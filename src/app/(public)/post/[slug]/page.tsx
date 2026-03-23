@@ -7,6 +7,7 @@ import AudioPlayer from '@/components/AudioPlayer';
 import PostCard from '@/components/PostCard';
 import PostViewCounter from '@/components/PostViewCounter';
 import SafeImage from '@/components/SafeImage';
+import { normalizeRichTextContent } from '@/lib/richText';
 import styles from './post.module.css';
 import { buildMetadata, stripHtml, toAbsoluteUrl, truncateText } from '@/lib/seo';
 
@@ -74,6 +75,7 @@ export default async function SinglePostPage({ params }: Props) {
     }
 
     const now = new Date();
+    const renderedContent = normalizeRichTextContent(post.content);
     const readingMinutes = estimateReadingMinutes(post.content || post.excerpt);
     const publishedDate = formatPublishedDate(post.createdAt);
     const shareUrl = toAbsoluteUrl(`/post/${post.slug}`);
@@ -281,7 +283,7 @@ export default async function SinglePostPage({ params }: Props) {
                         </div>
                     </div>
 
-                    <div className={styles.content}>{post.content}</div>
+                    <div className={styles.content} dangerouslySetInnerHTML={{ __html: renderedContent }} />
 
                     {(previousPost || nextPost) && (
                         <div className={styles.navGrid}>

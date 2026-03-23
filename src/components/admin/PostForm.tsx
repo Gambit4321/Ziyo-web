@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import { Calendar, Check, ChevronRight, Clock, FileText, Image as ImageIcon, Video } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { Calendar, Check, ChevronRight, Clock, Image as ImageIcon } from 'lucide-react';
 import { createPost } from '@/actions/post';
 import FileBrowser from './FileBrowser';
 import FileUpload from './FileUpload';
+import RichTextEditor from './RichTextEditor';
 import styles from './PostForm.module.css';
 
 type PostType = 'standard' | 'audio' | 'video';
@@ -15,6 +16,7 @@ interface Category {
     id: string;
     name: string;
     parentId: string | null;
+    slug?: string;
 }
 
 interface Props {
@@ -22,8 +24,6 @@ interface Props {
     categories: Category[];
     initialType?: string;
 }
-
-const AUDIO_SECTION_ID = 'cml6ifrsm0004g1iirlq11tn9';
 
 function slugify(value: string) {
     return value
@@ -34,13 +34,21 @@ function slugify(value: string) {
 }
 
 export default function PostForm({ sections, categories, initialType = 'standard' }: Props) {
+    const resolvedInitialType = initialType === 'audio' || initialType === 'video' ? initialType : 'standard';
+    const defaultArticleCategory = useMemo(
+        () =>
+            categories.find((category) => {
+                const normalizedName = category.name.toLowerCase().replace(/[^a-z0-9]+/g, '');
+                return category.slug === 'maqolalar' || normalizedName === 'maqolalar';
+            }) || null,
+        [categories]
+    );
+    const isStandardFlow = resolvedInitialType === 'standard';
     const [title, setTitle] = useState('');
     const [slug, setSlug] = useState('');
     const [isSlugTouched, setIsSlugTouched] = useState(false);
     const [selectedSection, setSelectedSection] = useState('');
-    const [postType, setPostType] = useState<PostType>(
-        initialType === 'audio' || initialType === 'video' ? initialType : 'standard'
-    );
+    const postType: PostType = resolvedInitialType;
     const [mediaType, setMediaType] = useState<MediaType>('url');
     const [thumbnailUrl, setThumbnailUrl] = useState('');
     const [mediaUrl, setMediaUrl] = useState('');
@@ -48,10 +56,29 @@ export default function PostForm({ sections, categories, initialType = 'standard
     const [showBrowser, setShowBrowser] = useState(false);
     const [step, setStep] = useState(1);
     const [publishStatus, setPublishStatus] = useState<PublishStatus>('published');
+    const [isFeatured, setIsFeatured] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const effectiveSectionId = selectedSection;
 
-    const filteredCategories = categories.filter((category) => category.parentId === selectedSection);
-    const audioCategories = categories.filter((category) => category.parentId === AUDIO_SECTION_ID);
+    const nestedCategories = useMemo(
+        () => categories.filter((category) => category.parentId === effectiveSectionId),
+        [categories, effectiveSectionId]
+    );
+    const articleCategoryOptions = useMemo(() => {
+        if (!isStandardFlow || !defaultArticleCategory) {
+            return [];
+        }
+
+        const children = categories.filter((category) => category.parentId === defaultArticleCategory.id);
+        return children.length > 0 ? children : [defaultArticleCategory];
+    }, [categories, defaultArticleCategory, isStandardFlow]);
+    const categoryOptions = isStandardFlow ? articleCategoryOptions : nestedCategories;
     const effectiveMediaUrl = mediaType === 'url' ? mediaUrl : nasVideoPath;
+    const effectiveSelectedCategory = categoryOptions.some((category) => category.id === selectedCategory)
+        ? selectedCategory
+        : isStandardFlow && categoryOptions.length === 1
+          ? categoryOptions[0].id
+          : '';
 
     return (
         <form action={createPost} className={styles.form}>
@@ -65,6 +92,10 @@ export default function PostForm({ sections, categories, initialType = 'standard
             <input type="hidden" name="published" value={publishStatus === 'draft' ? 'false' : 'true'} />
             <input type="hidden" name="thumbnail" value={thumbnailUrl} />
             <input type="hidden" name="videoUrl" value={effectiveMediaUrl} />
+            {isStandardFlow && defaultArticleCategory && <input type="hidden" name="sectionId" value={defaultArticleCategory.id} />}
+            {isStandardFlow && categoryOptions.length <= 1 && effectiveSelectedCategory && (
+                <input type="hidden" name="categoryId" value={effectiveSelectedCategory} />
+            )}
 
             <div className={styles.stepContent} style={{ display: step === 1 ? 'block' : 'none' }}>
                 <div className={styles.field}>
@@ -123,86 +154,92 @@ export default function PostForm({ sections, categories, initialType = 'standard
                     </div>
 
                     <div className={styles.field}>
-                        <label>
-                            <Clock size={14} /> Davomiyligi (daq:soniya)
+                        <label>Tavsiyalar</label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minHeight: '46px' }}>
+                            <input
+                                type="checkbox"
+                                name="featured"
+                                checked={isFeatured}
+                                onChange={(event) => setIsFeatured(event.target.checked)}
+                            />
+                            <span>Muharrir tanloviga qo&apos;shish</span>
                         </label>
-                        <input type="text" name="videoDuration" className={styles.input} placeholder="05:30" />
                     </div>
                 </div>
 
-                <div className={styles.row} style={{ display: postType === 'audio' ? 'none' : 'flex' }}>
-                    <div className={styles.field}>
-                        <label>{"Bo'lim (Section)"}</label>
-                        <select
-                            name="sectionId"
-                            className={styles.select}
-                            value={postType === 'audio' ? AUDIO_SECTION_ID : selectedSection}
-                            onChange={(event) => setSelectedSection(event.target.value)}
-                            required={postType !== 'audio'}
-                        >
-                            <option value="">Tanlang...</option>
-                            {sections.map((section) => (
-                                <option key={section.id} value={section.id}>
-                                    {section.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div className={styles.field}>
-                        <label>Kategoriya</label>
-                        <select
-                            name="categoryId"
-                            className={styles.select}
-                            disabled={postType !== 'audio' && !selectedSection}
-                        >
-                            <option value="">Tanlang...</option>
-                            {(postType === 'audio' ? audioCategories : filteredCategories).map((category) => (
-                                <option key={category.id} value={category.id}>
-                                    {category.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                </div>
-
-                <div className={styles.row}>
-                    {postType !== 'audio' && (
-                        <div className={styles.field} style={{ flex: 1 }}>
-                            <label>
-                                <ImageIcon size={14} /> Asosiy Rasm
-                            </label>
-                            <FileUpload label="Rasm yuklash" onUploadComplete={(url) => setThumbnailUrl(url)} />
+                {isStandardFlow ? (
+                    categoryOptions.length > 1 ? (
+                        <div className={styles.field}>
+                            <label>Kategoriya</label>
+                            <select
+                                name="categoryId"
+                                className={styles.select}
+                                value={effectiveSelectedCategory}
+                                onChange={(event) => setSelectedCategory(event.target.value)}
+                                required
+                            >
+                                <option value="">Tanlang...</option>
+                                {categoryOptions.map((category) => (
+                                    <option key={category.id} value={category.id}>
+                                        {category.name}
+                                    </option>
+                                ))}
+                            </select>
+                            <span className={styles.fieldHint}>Bo&apos;lim avtomatik `Maqolalar` bo&apos;ladi.</span>
                         </div>
-                    )}
+                    ) : null
+                ) : (
+                    <div className={styles.row}>
+                        <div className={styles.field}>
+                            <label>{"Bo'lim (Section)"}</label>
+                            <select
+                                name="sectionId"
+                                className={styles.select}
+                                value={selectedSection}
+                                onChange={(event) => {
+                                    setSelectedSection(event.target.value);
+                                    setSelectedCategory('');
+                                }}
+                                required
+                            >
+                                <option value="">Tanlang...</option>
+                                {sections.map((section) => (
+                                    <option key={section.id} value={section.id}>
+                                        {section.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
 
-                    <div className={styles.field} style={{ flex: 1, display: initialType === 'audio' ? 'none' : 'block' }}>
-                        <label>Material Turi</label>
-                        <div className={styles.typeGrid}>
-                            <button
-                                type="button"
-                                onClick={() => setPostType('standard')}
-                                className={`${styles.typeBtn} ${postType === 'standard' ? styles.activeType : ''}`}
+                        <div className={styles.field}>
+                            <label>Kategoriya</label>
+                            <select
+                                name="categoryId"
+                                className={styles.select}
+                                value={effectiveSelectedCategory}
+                                onChange={(event) => setSelectedCategory(event.target.value)}
+                                disabled={!selectedSection}
+                                required
                             >
-                                <FileText size={16} /> Maqola
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => setPostType('audio')}
-                                className={`${styles.typeBtn} ${postType === 'audio' ? styles.activeType : ''}`}
-                            >
-                                <Clock size={16} /> Audio
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => setPostType('video')}
-                                className={`${styles.typeBtn} ${postType === 'video' ? styles.activeType : ''}`}
-                            >
-                                <Video size={16} /> Video
-                            </button>
+                                <option value="">Tanlang...</option>
+                                {categoryOptions.map((category) => (
+                                    <option key={category.id} value={category.id}>
+                                        {category.name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                     </div>
-                </div>
+                )}
+
+                {postType !== 'audio' && (
+                    <div className={styles.field}>
+                        <label>
+                            <ImageIcon size={14} /> Asosiy Rasm
+                        </label>
+                        <FileUpload label="Rasm yuklash" onUploadComplete={(url) => setThumbnailUrl(url)} />
+                    </div>
+                )}
 
                 {(postType === 'audio' || postType === 'video') && (
                     <div className={styles.mediaSourceSection}>
@@ -225,14 +262,16 @@ export default function PostForm({ sections, categories, initialType = 'standard
 
                         <div className={styles.tabContent}>
                             {mediaType === 'url' && (
-                                <input
-                                    type="url"
-                                    value={mediaUrl}
-                                    onChange={(event) => setMediaUrl(event.target.value)}
-                                    placeholder={postType === 'audio' ? 'SoundCloud havolasi...' : 'YouTube havolasi...'}
-                                    className={styles.input}
-                                    required
-                                />
+                                <div className={styles.field}>
+                                    <input
+                                        type="url"
+                                        value={mediaUrl}
+                                        onChange={(event) => setMediaUrl(event.target.value)}
+                                        placeholder={postType === 'audio' ? 'SoundCloud havolasi...' : 'YouTube havolasi...'}
+                                        className={styles.input}
+                                        required
+                                    />
+                                </div>
                             )}
                             {mediaType === 'nas' && (
                                 <div className={styles.nasInput}>
@@ -255,13 +294,20 @@ export default function PostForm({ sections, categories, initialType = 'standard
                                     onUploadComplete={(url) => setNasVideoPath(url)}
                                 />
                             )}
+
+                            <div className={styles.field} style={{ marginTop: '1rem' }}>
+                                <label>
+                                    <Clock size={14} /> Davomiyligi (daq:soniya)
+                                </label>
+                                <input type="text" name="videoDuration" className={styles.input} placeholder="05:30" />
+                            </div>
                         </div>
                     </div>
                 )}
 
                 <div className={styles.field}>
                     <label>Matn (Content)</label>
-                    <textarea name="content" rows={10} className={styles.textarea}></textarea>
+                    <RichTextEditor name="content" />
                 </div>
 
                 <div className={styles.actions}>
