@@ -1,0 +1,239 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.overlay.open .modal {
+    transform: translateY(0);
+}
+
+.closeBtn {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    background: none;
+    border: none;
+    color: var(--text-white);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s;
+}
+
+.closeBtn:hover {
+    color: var(--primary-gold);
+}
+
+.form {
+    position: relative;
+    width: 100%;
+}
+
+.input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--text-gray);
+    padding: 1rem 0;
+    font-size: 2rem;
+    color: var(--text-white);
+    font-family: var(--font-serif);
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input:focus {
+    border-bottom-color: var(--primary-gold);
+}
+
+.input::placeholder {
+    color: var(--text-gray);
+    opacity: 0.5;
+}
+
+.submitBtn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--primary-gold);
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.results {
+    margin-top: 1.5rem;
+    background: rgba(11, 15, 21, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 1.25rem;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+}
+
+.resultsHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.resultsLabel {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+
+.allResultsBtn {
+    background: none;
+    border: none;
+    color: var(--primary-gold);
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.status {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    padding: 0.5rem 0;
+}
+
+.group + .group {
+    margin-top: 1.25rem;
+}
+
+.groupTitle {
+    color: var(--text-white);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 0.85rem;
+}
+
+.categoryList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.categoryItem {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-white);
+    border-radius: 999px;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.categoryItem:hover {
+    border-color: var(--primary-gold);
+    transform: translateY(-1px);
+}
+
+.postList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.postItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.9rem 1rem;
+    transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.postItem:hover {
+    border-color: rgba(212, 175, 55, 0.65);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
+}
+
+.postText {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.postCategory {
+    color: var(--primary-gold);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.postTitle {
+    color: var(--text-white);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.postExcerpt {
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.postArrow {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .results {
+        padding: 1rem;
+        border-radius: 16px;
+    }
+
+    .resultsHeader {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .postItem {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .postArrow {
+        color: var(--primary-gold);
+    }
+}

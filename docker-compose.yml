@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  ziyo-web:
+    container_name: ziyo_web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      # Map the SQLite database file to persist data
+      - ./prisma/dev.db:/app/prisma/dev.db
+      # Map the uploads directory to persist user uploads
+      - ./public/uploads:/app/public/uploads
+    environment:
+      - DATABASE_URL=file:./prisma/dev.db
+      - NEXTAUTH_SECRET=changeme_in_production
+      - NEXTAUTH_URL=http://localhost:3000
+    restart: unless-stopped

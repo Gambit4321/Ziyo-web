@@ -1,0 +1,75 @@
+.sidebar {
+    width: 250px;
+    background-color: var(--bg-card);
+    border-right: 1px solid var(--border-color);
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-gold);
+    margin-bottom: 2rem;
+    padding: 0.5rem;
+    text-decoration: none;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: var(--text-gray);
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.link:hover,
+.link.active {
+    background-color: urlpatterns(--bg-dark);
+    color: var(--primary-gold);
+}
+
+.user {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.logoutBtn {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-gray);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.logoutBtn:hover {
+    border-color: red;
+    color: red;
+}

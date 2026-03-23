@@ -1,0 +1,35 @@
+---------------------------------------------------
+ 📂 SERVER PASPORTI: ZIYO WEB (UPDATED)
+---------------------------------------------------
+
+1. ASOSIY MA'LUMOTLAR
+   - Tizim (OS):      Ubuntu 22.04 LTS (LXC Container)
+   - Hostname:        ziyoweb
+   - IP Manzil:       192.168.200.205
+   - Gateway:         192.168.200.1
+
+2. ULANISH YO'LLARI
+   - Web Sayt:        http://192.168.200.205
+   - Windows Disk:    \\192.168.200.205\ziyoweb (Sizda W: diski)
+   - SSH / Terminal:  IP: 192.168.200.205 | Port: 22
+
+3. LOGIN MA'LUMOTLARI
+   - Tizimga kirish:  root
+   - Samba (Disk):    root
+   - Parol:           [O'zingiz qo'ygan parol]
+
+4. TEXNIK TA'MINOT (TECH STACK)
+   - Web Server:      Nginx (Reverse Proxy)
+   - Runtime:         Node.js 20+ (Next.js)
+   - Ma'lumotlar bazasi: MariaDB (MySQL) - Database: ziyoweb
+   - DB Login:        root
+   - DB Parol:        root (o'zgartirish tavsiya etiladi)
+
+5. MUHIM FAYLLAR JOYLASHUVI
+   - Loyiha papkasi:   /var/www/html/ziyo-web/  <-- (W: disk)
+   - Nginx sozlamasi: /etc/nginx/sites-available/default
+   - PM2/Node logi:   ~/.pm2/logs/ziyo-web-error.log
+   - Baza:            MariaDB (Lokal xizmat)
+
+---------------------------------------------------
+Holati: TAYYOR ✅ | Sana: 03.02.2026

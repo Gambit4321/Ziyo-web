@@ -1,0 +1,280 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+@media (min-width: 1024px) {
+    .layout {
+        flex-direction: row;
+        gap: 3rem;
+    }
+}
+
+.mainContent {
+    flex: 1;
+}
+
+.breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #6b7280;
+    font-size: 0.92rem;
+}
+
+.breadcrumbLink {
+    color: inherit;
+    text-decoration: none;
+}
+
+.breadcrumbLink:hover {
+    color: var(--primary-color);
+}
+
+.breadcrumbDivider {
+    opacity: 0.6;
+}
+
+.breadcrumbCurrent {
+    color: var(--text-color);
+}
+
+.sidebar {
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .sidebar {
+        width: 350px;
+        flex-shrink: 0;
+    }
+}
+
+.videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    margin-bottom: 1.5rem;
+    background: black;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.iframe,
+.video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.featuredImage {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #e5e7eb;
+}
+
+:global(.dark) .featuredImage {
+    background-color: #374151;
+}
+
+.featuredImage :global(img) {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+}
+
+.title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.meta {
+    display: flex;
+    gap: 0.75rem;
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+}
+
+.utilityBar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.authorCard,
+.shareCard {
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1rem 1.1rem;
+    background: rgba(15, 23, 42, 0.03);
+}
+
+.authorCard {
+    min-width: 180px;
+}
+
+.authorLabel,
+.shareLabel {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: #6b7280;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.authorName {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.shareLinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.shareLink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 88px;
+    padding: 0.55rem 0.9rem;
+    border-radius: 999px;
+    background: var(--primary-color);
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.shareLink:hover {
+    opacity: 0.92;
+}
+
+.content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-color);
+    white-space: pre-wrap;
+}
+
+.navGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 2.5rem;
+}
+
+.navCard,
+.navCardPlaceholder {
+    min-height: 110px;
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 1rem 1.1rem;
+    background: rgba(15, 23, 42, 0.03);
+}
+
+.navCard {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.navCard:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.navLabel {
+    color: #6b7280;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.navTitle {
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+.navCardPlaceholder {
+    visibility: hidden;
+}
+
+.sidebarTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+    display: inline-block;
+}
+
+.sidebarGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .layout {
+        padding: 1rem 0;
+        gap: 1.5rem;
+    }
+
+    .title {
+        font-size: 1.4rem;
+    }
+
+    .content {
+        font-size: 1rem;
+    }
+
+    .meta {
+        font-size: 0.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .utilityBar {
+        margin-bottom: 1.5rem;
+    }
+
+    .authorCard,
+    .shareCard {
+        width: 100%;
+    }
+
+    .navGrid {
+        grid-template-columns: 1fr;
+        margin-top: 2rem;
+    }
+
+    .navCardPlaceholder {
+        display: none;
+    }
+}

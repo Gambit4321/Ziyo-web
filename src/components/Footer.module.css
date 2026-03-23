@@ -1,0 +1,138 @@
+.footer {
+    background-color: #050608;
+    padding: 4rem 0 2rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.logo {
+    font-family: serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.ziyo {
+    color: var(--primary-gold);
+}
+
+.uz {
+    color: white;
+}
+
+.text {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.title {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.links a {
+    color: var(--text-gray);
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.links a:hover {
+    color: var(--primary-gold);
+}
+
+.socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.socialLink {
+    color: white;
+    background: var(--bg-card);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    border: 1px solid var(--border-color);
+}
+
+.socialLink:hover {
+    transform: translateY(-2px);
+    color: white;
+}
+
+/* Specific Brand Colors on Hover */
+.socialLink:nth-child(1):hover {
+    background: #229ED9;
+    border-color: #229ED9;
+}
+
+/* Telegram */
+.socialLink:nth-child(2):hover {
+    background: #E1306C;
+    border-color: #E1306C;
+}
+
+/* Instagram */
+.socialLink:nth-child(3):hover {
+    background: #1877F2;
+    border-color: #1877F2;
+}
+
+/* Facebook */
+.socialLink:nth-child(4):hover {
+    background: #FF0000;
+    border-color: #FF0000;
+}
+
+/* Youtube */
+
+
+.bottom {
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}

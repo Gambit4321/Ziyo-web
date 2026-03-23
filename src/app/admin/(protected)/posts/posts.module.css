@@ -1,0 +1,239 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-white);
+}
+
+.createBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary-gold);
+    color: var(--bg-dark);
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: bold;
+    transition: opacity 0.2s;
+}
+
+.createBtn:hover {
+    opacity: 0.9;
+    background-color: var(--primary-gold-hover);
+}
+
+.filters {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.searchInput,
+.filterSelect {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-white);
+    border-radius: 0.5rem;
+    padding: 0.65rem 0.85rem;
+}
+
+.searchInput {
+    min-width: 320px;
+    flex: 1;
+}
+
+.filterBtn {
+    background: transparent;
+    border: 1px solid var(--primary-gold);
+    color: var(--primary-gold);
+    border-radius: 0.5rem;
+    padding: 0.65rem 1rem;
+    cursor: pointer;
+}
+
+.filterBtn:hover {
+    background: rgba(198, 168, 102, 0.08);
+}
+
+.tableWrapper {
+    background: var(--bg-card);
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+}
+
+.table {
+    width: 100%;
+    min-width: 1000px;
+    /* Jadval siqilib ketmasligi uchun */
+    border-collapse: collapse;
+    text-align: left;
+    table-layout: fixed;
+    /* Kengliklarni qat'iy nazorat qilish uchun */
+}
+
+.table th {
+    background-color: var(--bg-header);
+    padding: 0.5rem 0.75rem;
+    /* Reduced padding */
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-gray);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table td {
+    padding: 0.5rem 0.75rem;
+    /* Reduced padding */
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-white);
+    font-size: 0.875rem;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Katakchadan chiqib ketmasligi uchun */
+}
+
+.titleCell {
+    font-weight: 500;
+    color: var(--text-white);
+    /* Table cell default behavior */
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.postInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.postTitle {
+    font-weight: 600;
+    color: var(--text-white);
+}
+
+.postSlug {
+    font-size: 0.75rem;
+    color: var(--text-gray);
+}
+
+.thumbnailWrapper {
+    width: 80px;
+    height: 50px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+}
+
+.thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.noThumbnail {
+    width: 80px;
+    height: 50px;
+    background: var(--bg-dark);
+    color: var(--text-gray);
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    border: 1px dashed var(--border-color);
+}
+
+.statusBadge {
+    display: inline-flex;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.published {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.draft {
+    background: rgba(107, 114, 128, 0.1);
+    color: #9ca3af;
+    border: 1px solid rgba(107, 114, 128, 0.2);
+}
+
+.scheduled {
+    background: rgba(59, 130, 246, 0.12);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.24);
+}
+
+.authorWrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.badge {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.iconBtn {
+    padding: 0.4rem;
+    color: var(--text-gray);
+    cursor: pointer;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.iconBtn:hover {
+    color: var(--primary-gold);
+    border-color: var(--primary-gold);
+    background: rgba(198, 168, 102, 0.1);
+}
+
+.deleteBtn:hover {
+    color: #ef4444;
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.emptyState {
+    text-align: center;
+    padding: 3rem !important;
+    color: var(--text-gray);
+    font-size: 1rem;
+}

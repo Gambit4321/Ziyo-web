@@ -1,0 +1,110 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String
+  image     String?
+  role      String   @default("admin")
+  posts     Post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  parentId  String?
+  parent    Category? @relation("CategoryToCategory", fields: [parentId], references: [id])
+  children  Category[] @relation("CategoryToCategory")
+  posts     Post[]
+  image     String?   // URL to the category thumbnail (16:9)
+  order     Int      @default(0)
+  showInMenu Boolean  @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model HomeSection {
+  id           String   @id @default(cuid())
+  order        Int      @default(0)
+  isVisible    Boolean  @default(true)
+  type         String   // 'HERO', 'CAROUSEL', 'TABS', 'GRID', 'AUDIO'
+  title        String?  // Display title
+  categorySlug String?  // For data fetching
+  
+  // New Configuration Fields
+  sourceType    String   @default("CATEGORY") // CATEGORY, SECTION, MANUAL_POSTS
+  sourceId      String?  // ID of Category or Section.
+  displayStyle  String   @default("CAROUSEL") // CAROUSEL, LIST
+  sortType      String   @default("LATEST")   // LATEST, MOST_VIEWED, MANUAL
+  autoplaySeconds Int    @default(0)          
+  rowCount      Int      @default(1)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Post {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String?  @db.LongText // Can be rich text HTML
+  excerpt     String?
+  type        String   @default("standard") // standard, video, gallery, audio
+  
+  // Video fields
+  videoUrl    String?
+  videoDuration String?
+  
+  thumbnail   String?
+  featured    Boolean  @default(false)
+  views       Int      @default(0)
+  
+  published   Boolean  @default(true)
+  
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id])
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Media {
+    id        String   @id @default(cuid())
+    url       String
+    name      String
+    type      String
+    size      Int
+    createdAt DateTime @default(now())
+}
+
+model Banner {
+    id          String   @id @default(cuid())
+    title       String   // Main Title (Asosiy Yozuv)
+    topText     String?  // Tepa Yozuv
+    tagline     String?  // Tagline (Subtitle)
+    image       String
+    link        String?  // Havola
+    buttonText  String?  // Optional button text
+    description String?  // Description (Tavsif)
+    order       Int      @default(0)
+    isActive    Boolean  @default(true)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    deletedAt   DateTime?
+}

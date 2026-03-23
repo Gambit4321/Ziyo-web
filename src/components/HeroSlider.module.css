@@ -1,0 +1,155 @@
+.sliderWrapper {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    /* Adjust based on preference */
+    background-color: var(--bg-card);
+    overflow: hidden;
+    margin-bottom: 3rem;
+}
+
+.embla {
+    overflow: hidden;
+    height: 100%;
+}
+
+.embla__container {
+    display: flex;
+    height: 100%;
+}
+
+.embla__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    position: relative;
+    height: 100%;
+}
+
+.slideBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.slideContent {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.category {
+    background-color: var(--primary-gold);
+    color: #000;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    border-radius: 2px;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 2rem;
+    max-width: 55%;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.btn {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    border-radius: 4px;
+}
+
+.btn:hover {
+    background-color: var(--primary-gold);
+    border-color: var(--primary-gold);
+    color: #000;
+}
+
+.navBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.3);
+    border: none;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    transition: background-color 0.3s;
+    opacity: 0;
+    /* Hidden by default, show on hover wrapper */
+}
+
+.sliderWrapper:hover .navBtn {
+    opacity: 1;
+}
+
+.navBtn:hover {
+    background-color: var(--primary-gold);
+}
+
+.prevBtn {
+    left: 20px;
+}
+
+.nextBtn {
+    right: 20px;
+}
+
+@media (max-width: 768px) {
+    .sliderWrapper {
+        height: 350px;
+        margin-bottom: 2rem;
+    }
+
+    .slideContent {
+        padding: 0 1.5rem;
+    }
+
+    .title {
+        max-width: 100%;
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+    }
+
+    .category {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1.5rem;
+        font-size: 0.8rem;
+    }
+
+    .navBtn {
+        width: 35px;
+        height: 35px;
+    }
+}

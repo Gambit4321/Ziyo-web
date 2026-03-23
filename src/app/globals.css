@@ -1,0 +1,86 @@
+:root {
+  /* Ziyo.uz Color Palette */
+  --bg-dark: #0f111a;
+  /* Deep Dark Blue Background */
+  --bg-card: #161b22;
+  /* Slightly lighter for cards */
+  --bg-header: #0b0d14;
+  /* Darker header */
+
+  --primary-gold: #c6a866;
+  /* Gold accent color */
+  --primary-gold-hover: #d4b877;
+
+  --text-white: #ffffff;
+  --text-gray: #9ca3af;
+  --text-muted: #6b7280;
+
+  --border-color: #2d3748;
+
+  --font-main: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  /* For headings if needed, need to import */
+}
+
+[data-theme='light'] {
+  /* Light mode override if needed, but Ziyo.uz seems primarily dark/gold. 
+     Keeping it dark by default for "clone" accuracy, or mapping to light equivalent.
+     For now, let's focus on the Dark theme as primary to match screenshots. */
+  --bg-dark: #ffffff;
+  --bg-card: #f3f4f6;
+  --bg-header: #ffffff;
+  --text-white: #111827;
+  --text-gray: #4b5563;
+  --border-color: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+  font-family: var(--font-main);
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: 94%;
+  max-width: 1800px;
+  /* Balanced width: 94% */
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding: 0 1.25rem;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-gold);
+}

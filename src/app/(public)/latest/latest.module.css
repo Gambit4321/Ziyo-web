@@ -1,0 +1,83 @@
+.hero {
+    margin: 1.5rem 0 2rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    background:
+        radial-gradient(circle at top right, rgba(198, 168, 102, 0.15), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+}
+
+.eyebrow {
+    margin: 0 0 0.4rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--primary-gold);
+}
+
+.title {
+    margin: 0 0 0.5rem;
+    color: var(--text-white);
+    font-size: 2rem;
+}
+
+.description {
+    margin: 0;
+    max-width: 700px;
+    color: var(--text-gray);
+    line-height: 1.7;
+}
+
+.filters {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.filterChip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    text-decoration: none;
+    color: var(--text-white);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.filterChip:hover {
+    border-color: var(--primary-gold);
+}
+
+.activeChip {
+    border-color: var(--primary-gold);
+    background: rgba(198, 168, 102, 0.12);
+    color: var(--primary-gold);
+}
+
+.audioList {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.empty {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-gray);
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 1.1rem;
+        border-radius: 16px;
+    }
+
+    .title {
+        font-size: 1.55rem;
+    }
+}
